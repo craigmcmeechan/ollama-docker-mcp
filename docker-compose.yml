@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ollama-mcp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ollama-mcp-server
+    environment:
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - NODE_ENV=production
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge
